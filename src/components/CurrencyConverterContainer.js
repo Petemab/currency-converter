@@ -1,6 +1,32 @@
 import React, { Component } from 'react';
-import TitleBar from './TitleBar';
 import { FaExchangeAlt } from 'react-icons/fa';
+import Select from 'react-select';
+import TitleBar from './TitleBar';
+
+const customStyles = {
+  control: (base, state) => ({
+    ...base,
+    background: "#2e4265",
+    borderColor: "#2e4265",
+    boxShadow: state.isFocused ? null : null,
+    "&:hover": {
+      borderColor: "#2e4265"
+    }
+  }),
+  menu: base => ({
+    ...base,
+    borderRadius: 0,
+    marginTop: 0,
+    background: "#2e4265"
+  }),
+  menuList: base => ({
+    ...base,
+    padding: 0,
+    background: "#2e4265",
+    height: 70,
+  })
+};
+
 
 const styles = {
   page: {
@@ -17,7 +43,8 @@ class CurrencyConverterContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-   
+      rightNumberInput: 0,
+      leftNumberInput: 0,
     };
   }
 
@@ -51,16 +78,33 @@ class CurrencyConverterContainer extends Component {
                   padding: 10
                 }}
               >
-                <p>select box here</p>
+                <Select styles={customStyles} />
               </div>
               <div
                 style={{
                   backgroundColor: "#1d293f",
-                  height: '250px',
-                  padding: 10,
+                  height: "300px",
+                  padding: 10
                 }}
               >
-                <p>Text input here</p>
+                <input
+                  style={{
+                    position: "relative",
+                    marginTop: "20%",
+                    backgroundColor: "#1d293f",
+                    height: 100,
+                    color: "#fff0f7",
+                    border: "none",
+                    fontSize: 50,
+                    width: "100px"
+                  }}
+                  value={this.state.leftNumberInput}
+                  onChange={event =>
+                    this.setState({
+                      leftNumberInput: event.target.value.replace(/\D/, "")
+                    })
+                  }
+                />
               </div>
             </div>
             <FaExchangeAlt />
@@ -80,16 +124,35 @@ class CurrencyConverterContainer extends Component {
                   padding: 10
                 }}
               >
-                <p>select box here</p>
+                <Select styles={customStyles} />
               </div>
               <div
                 style={{
                   backgroundColor: "#1d293f",
-                  height: '250px',
-                  padding: 10,
+                  height: "300px",
+                  padding: 10
                 }}
               >
-                <p>Text input here</p>
+                <div>
+                  <input
+                    style={{
+                      position: "relative",
+                      marginTop: "20%",
+                      backgroundColor: "#1d293f",
+                      height: 100,
+                      color: "#fff0f7",
+                      border: "none",
+                      fontSize: 50,
+                      width: "100px"
+                    }}
+                    value={this.state.rightNumberInput}
+                    onChange={event =>
+                      this.setState({
+                        rightNumberInput: event.target.value.replace(/\D/, "")
+                      })
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>
