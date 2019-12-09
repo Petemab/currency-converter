@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { FaExchangeAlt } from 'react-icons/fa';
 import Select from 'react-select';
+import { fetchCurrencyRates, fetchCurrencyNames } from "../actions/currencyActions";
+
 import TitleBar from './TitleBar';
 
 const customStyles = {
@@ -15,8 +18,8 @@ const customStyles = {
   }),
   menu: base => ({
     ...base,
-    borderRadius: 0,
-    marginTop: 0,
+    borderRadius: null,
+    marginTop: null,
     background: "#2e4265"
   }),
   menuList: base => ({
@@ -26,6 +29,7 @@ const customStyles = {
     height: 70,
   })
 };
+
 
 
 const styles = {
@@ -39,6 +43,7 @@ const styles = {
     marginTop: "5%"
   }
 };
+
 class CurrencyConverterContainer extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +52,35 @@ class CurrencyConverterContainer extends Component {
       leftNumberInput: 0,
     };
   }
+
+
+
+  componentWillMount = () => {
+    fetchCurrencyRates();
+    fetchCurrencyNames();
+    // await this.fetchCurrencyRates()
+    // await this.fetchCurrencyNames()
+  }
+
+  // fetchCurrencyRates = async () => {
+  //   await fetch(
+  //     `http://www.apilayer.net/api/live?access_key=${API_KEY}&format=1`
+  //   )
+  //     .then(response => response.json())
+  //     .then(rates => console.log(rates))
+  //     .catch(error => alert(error.message));
+  //   // error handler and loading and dispatch to redux
+  // }
+
+  // fetchCurrencyNames = async () => {
+  //   await fetch(
+  //     `http://www.apilayer.net/api/list?access_key=${API_KEY}`
+  //   )
+  //     .then(response => response.json())
+  //     .then(currencyNames => console.log(currencyNames))
+  //     .catch(error => alert(error.message));
+  //   // errort handler, loading and dispatch to redux
+  // }
 
 
 
@@ -96,7 +130,7 @@ class CurrencyConverterContainer extends Component {
                     color: "#fff0f7",
                     border: "none",
                     fontSize: 50,
-                    width: "100px"
+                    width: "100%"
                   }}
                   value={this.state.leftNumberInput}
                   onChange={event =>
@@ -143,7 +177,7 @@ class CurrencyConverterContainer extends Component {
                       color: "#fff0f7",
                       border: "none",
                       fontSize: 50,
-                      width: "100px"
+                      width: "100%"
                     }}
                     value={this.state.rightNumberInput}
                     onChange={event =>
@@ -162,4 +196,25 @@ class CurrencyConverterContainer extends Component {
   }
 }
 
-export default CurrencyConverterContainer;
+function mapStateToProps({ currency }) {
+  const { currencyRates, isFetchingCurrencyRates, currencyNames, isFetchingCurrencyNames } = currency;
+  return {
+    currencyRates: currencyRates || {},
+    isFetchingCurrencyRates,
+    currencyNames: currencyNames || {},
+    isFetchingCurrencyNames,
+  }
+}
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     dispatch1: () => {
+//       dispatch(actionCreator)
+//     }
+//   }
+// }
+
+export default connect(
+  mapStateToProps,
+  // mapDispatchToProps
+)(CurrencyConverterContainer);
