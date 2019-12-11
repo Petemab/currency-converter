@@ -1,32 +1,40 @@
 import initialState from "./initialState";
-import * as types from '../actions/actionTypes';
+import {
+  FETCH_CURRENCY_RATES,
+  FETCH_CURRENCY_RATES_SUCCESS,
+  FETCH_CURRENCY_NAMES,
+  FETCH_CURRENCY_NAMES_SUCCESS,
+} from "../actions/actionTypes";
 
 
-export default function currency(state = initialState, action) {
+function currency(state = initialState, action) {
+  console.log('hitting the reducer', action);
       switch (action.type) {
-        case types.FETCH_CURRENCY_RATES:
+        case FETCH_CURRENCY_RATES:
           return {
             ...state,
             isFetchingCurrencyRates: true
           };
-        case types.FETCH_CURRENCY_RATES_SUCCESS:
+        case FETCH_CURRENCY_RATES_SUCCESS:
           return {
             ...state,
             isFetchingCurrencyRates: false,
-            currencyRates: action.payload.currencyRates,
+            currencyRates: action.payload,
           };
-        case types.FETCH_CURRENCY_NAMES:
+        case FETCH_CURRENCY_NAMES:
           return {
             ...state,
             isFetchingCurrencyNames: true
           };
-        case types.FETCH_CURRENCY_NAMES_SUCCESS:
+        case FETCH_CURRENCY_NAMES_SUCCESS:
           return {
             ...state,
             isFetchingCurrencyNames: false,
-            currencyNames: action.payload.currencyNames,
+            currencyNames: action.payload,
           };
         default:
           return state;
       };
 }
+
+export default currency;

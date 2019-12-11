@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { FaExchangeAlt } from 'react-icons/fa';
 import Select from 'react-select';
-import { fetchCurrencyRates, fetchCurrencyNames } from "../actions/currencyActions";
+import { getCurrencyRates, getCurrencyNames } from "../actions/fetchCurrencyInfo";
+// import * as actions from "../actions/actions";
 
 import TitleBar from './TitleBar';
 
@@ -54,10 +55,10 @@ class CurrencyConverterContainer extends Component {
   }
 
 
-
   componentWillMount = () => {
-    fetchCurrencyRates();
-    fetchCurrencyNames();
+    console.log('in comp will mount');
+    getCurrencyRates();
+    getCurrencyNames();
     // await this.fetchCurrencyRates()
     // await this.fetchCurrencyNames()
   }
@@ -85,6 +86,7 @@ class CurrencyConverterContainer extends Component {
 
 
   render() {
+    console.log(this.props);
     return (
       <div style={styles.page}>
         <div style={styles.containerDiv}>
